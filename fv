@@ -1,0 +1,50 @@
+#!/bin/bash
+
+
+# Generate Page
+cat << EOF >> focusvid.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>FocusVid</title>
+	<style>
+	body {
+		padding: 10px;
+		background-color: white;
+		color: black;
+		font-size: 25px;
+	}
+	.dark-mode {
+		background-color: black;
+		color: white;
+	}
+    .youtube-video {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+	}
+	</style>
+</head>
+<body>
+	<button onclick="darkMode()">Mode</button>
+    <iframe class="youtube-video" src="https://www.youtube.com/embed/mDKM-JtUhhc" title="YouTube video player" frameborder="0" allow="accelerometer;
+        clipboard-write;
+        encrypted-media;
+        gyroscope;
+        picture-in-picture"
+        allowfullscreen>
+	</iframe>
+	<script>
+	function darkMode() {
+		var element = document.body;
+		element.classList.toggle("dark-mode");
+	}
+	</script>
+</body>
+</html>
+EOF
+
+# Serve Page
+xdg-open focusvid.html
