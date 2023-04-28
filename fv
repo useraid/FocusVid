@@ -1,7 +1,7 @@
 #!/bin/bash
 
-
 # Generate Page
+function pageGen(){
 cat << EOF >> focusvid.html
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@ cat << EOF >> focusvid.html
 </head>
 <body>
 	<button onclick="darkMode()">Mode</button>
-    <iframe class="youtube-video" src="https://www.youtube.com/embed/mDKM-JtUhhc" title="YouTube video player" frameborder="0" allow="accelerometer;
+    <iframe class="youtube-video" src="https://www.youtube.com/embed/$VIDID" title="YouTube video player" frameborder="0" allow="accelerometer;
         clipboard-write;
         encrypted-media;
         gyroscope;
@@ -45,6 +45,34 @@ cat << EOF >> focusvid.html
 </body>
 </html>
 EOF
+}
 
 # Serve Page
-xdg-open focusvid.html
+function servePage(){
+    if [[ $(uname)=="Linux" ]]
+    then
+        echo xdg-open focusvid.html
+    else
+        echo "Open focusvid.html in the current directory"
+    fi
+}
+
+# Main
+while [[ $# > 0 ]]
+do
+    key="$1"
+    case $key in
+    --video)
+        shift
+        video_ids=("$@")
+        VIDID=${video_ids[0]}
+        pageGen
+        servePage
+        break
+        ;;
+    *)
+        echo "Unknown option: $key"
+        exit 1
+        ;;
+    esac
+done
